@@ -51,7 +51,7 @@ jobs:
 
           EXISTING=$(lark-cli wiki nodes list \
             --params "{\"space_id\":\"${WIKI_SPACE_ID}\",\"parent_node_token\":\"${WIKI_PARENT_NODE}\"}" \
-            --as user 2>/dev/null \
+            --as bot 2>/dev/null \
             | jq -r --arg t "$TITLE" '.data.items[] | select(.title==$t) | .obj_token' | head -1)
 
           if [ -n "${EXISTING:-}" ]; then
@@ -65,7 +65,7 @@ jobs:
               --title "$TITLE" \
               --obj-type docx \
               --node-type origin \
-              --as user 2>&1 \
+              --as bot 2>&1 \
               | jq -r '.data.obj_token')
           fi
 
@@ -99,4 +99,4 @@ jobs:
             --command overwrite \
             --doc-format markdown \
             --content "$(cat /tmp/release-body.md)" \
-            --as user
+            --as bot
